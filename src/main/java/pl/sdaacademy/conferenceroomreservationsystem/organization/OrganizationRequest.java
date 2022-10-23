@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class OrganizationRequest {
     private Long id;
-    @NotBlank//(message = "Nazwa nie może być pusta") //message jest opcjonalny
+    @NotBlank(message = "Can't be null or blank!")//message jest opcjonalny, jeśli nie podamy to będzie domyślny
     @Size(min=2, max=20)
     private String name;
 }

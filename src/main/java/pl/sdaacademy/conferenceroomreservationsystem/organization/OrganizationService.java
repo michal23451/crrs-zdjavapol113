@@ -1,27 +1,40 @@
 package pl.sdaacademy.conferenceroomreservationsystem.organization;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.sdaacademy.conferenceroomreservationsystem.SortType;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 class OrganizationService {
     private final OrganizationRepository organizationRepository;
     private final OrganizationMapper organizationMapper;
 
-    OrganizationService(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper) {
-        this.organizationRepository = organizationRepository;
-        this.organizationMapper = organizationMapper;
+    List<OrganizationDTO> getAll(SortType sortType) {
+        if (sortType != null) {
+            List<OrganizationDTO> result = organizationRepository.findAll(sortType.getSort("name"))
+                    .stream()
+                    .map(organization -> organizationMapper.mapOrganizationToOrganizationDTO(organization))
+                    .collect(Collectors.toList());
+            return result;
+        } else {
+            List<OrganizationDTO> result = organizationRepository.findAll()
+                    .stream()
+                    .map(organization -> organizationMapper.mapOrganizationToOrganizationDTO(organization))
+                    .collect(Collectors.toList());
+            return result;
+        }
     }
 
-    List<OrganizationDTO> getAll() {
-        List<OrganizationDTO> result = organizationRepository.findAll()
-                .stream()
-                .map(organization -> organizationMapper.mapOrganizationToOrganizationDTO(organization))
-                .collect(Collectors.toList());
-        return result;
+    OrganizationDTO getByName(String name) {
+        Organization organization = organizationRepository.findByName(name)
+                .orElseThrow(() -> new NoSuchElementException("No organization found!"));
+        OrganizationDTO organizationDTO = organizationMapper.mapOrganizationToOrganizationDTO(organization);
+        return organizationDTO;
     }
 
     OrganizationDTO add(OrganizationRequest request) {
