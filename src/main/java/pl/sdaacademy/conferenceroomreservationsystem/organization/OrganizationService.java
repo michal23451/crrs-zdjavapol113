@@ -28,7 +28,11 @@ class OrganizationService {
 
         organizationRepository.findByName(request.getName())
                 .ifPresent(organization -> {
+<<<<<<< HEAD
                     throw new IllegalArgumentException("Organization to add already exists!");
+=======
+                    throw new IllegalArgumentException("Organization already exists!");
+>>>>>>> e12457a9394eab37e7db0b4e251027b675f2a883
                 });
 
         Organization organizationToAdd = organizationMapper.mapOrganizationRequestToOrganization(request);
@@ -50,11 +54,14 @@ class OrganizationService {
         Organization organizationToUpdate = organizationRepository.findById(request.getId())
                 .orElseThrow(() -> new NoSuchElementException("No organization to update found!"));
 
+<<<<<<< HEAD
         organizationRepository.findByName(request.getName())
                 .ifPresent(organization -> {
                     throw new IllegalArgumentException("Organization to update already exists!");
                 });
 
+=======
+>>>>>>> e12457a9394eab37e7db0b4e251027b675f2a883
         if (request.getName() != null) {
             organizationToUpdate.setName(request.getName());
         }
