@@ -57,11 +57,14 @@
 			<artifactId>springfox-boot-starter</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+<<<<<<< HEAD
 		<!-- walidacja -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+=======
+>>>>>>> e12457a9394eab37e7db0b4e251027b675f2a883
 
 	</dependencies>
 
