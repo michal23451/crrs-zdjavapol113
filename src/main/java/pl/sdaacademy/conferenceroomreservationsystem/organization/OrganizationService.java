@@ -33,7 +33,9 @@ class OrganizationService {
     OrganizationDTO getByName(String name) {
         Organization organization = organizationRepository.findByName(name)
                 .orElseThrow(() -> new NoSuchElementException("No organization found!"));
+
         OrganizationDTO organizationDTO = organizationMapper.mapOrganizationToOrganizationDTO(organization);
+
         return organizationDTO;
     }
 

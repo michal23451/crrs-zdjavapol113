@@ -16,6 +16,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/api/organizations")
 class OrganizationController {
+
     private final OrganizationService organizationService;
 
     public OrganizationController(OrganizationService organizationService) {
@@ -35,7 +36,7 @@ class OrganizationController {
 
 
     @PostMapping
-    OrganizationDTO add(@Valid @RequestBody OrganizationRequest request) {
+    OrganizationDTO add(@Valid @RequestBody OrganizationRequest request) { //@Valid - łapiemy wyjątek w @ExceptionHandler(MethodArgumentNotValidException.class)
         return organizationService.add(request);
     }
 
@@ -61,8 +62,7 @@ class OrganizationController {
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
+    public ResponseEntity<Object> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
