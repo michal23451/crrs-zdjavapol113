@@ -15,4 +15,8 @@ public class OrganizationRequest {
     @NotBlank(message = "Can't be null or blank!")//message jest opcjonalny, jeśli nie podamy to będzie domyślny
     @Size(min=2, max=20)
     private String name;
+
+    public OrganizationRequest(String name) {
+        this.name = name;
+    }
 }

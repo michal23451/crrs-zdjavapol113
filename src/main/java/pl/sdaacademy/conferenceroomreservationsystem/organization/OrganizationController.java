@@ -1,5 +1,6 @@
 package pl.sdaacademy.conferenceroomreservationsystem.organization;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -15,14 +16,10 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/organizations")
+@RequiredArgsConstructor
 class OrganizationController {
 
     private final OrganizationService organizationService;
-
-    public OrganizationController(OrganizationService organizationService) {
-        this.organizationService = organizationService;
-    }
-
 
     @GetMapping
     List<OrganizationDTO> getAll(@RequestParam(required = false) SortType sortType) {

@@ -17,4 +17,8 @@ public class Organization {
     @Column(nullable = false, unique = true)
     private String name;
 
+    public Organization(String name) { //wykorzystywany w testach
+        this.name = name;
+    }
+
 }

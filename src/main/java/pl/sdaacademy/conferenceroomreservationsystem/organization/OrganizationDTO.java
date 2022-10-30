@@ -11,5 +11,7 @@ public class OrganizationDTO {
     private Long id;
     private String name;
 
-
+    public OrganizationDTO(String name) {
+        this.name = name;
+    }
 }
