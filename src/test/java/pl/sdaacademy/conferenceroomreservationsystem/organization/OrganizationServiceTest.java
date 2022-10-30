@@ -27,7 +27,7 @@ class OrganizationServiceTest {
     OrganizationRepository organizationRepository;
     @Autowired
     OrganizationService organizationService;
-    @Autowired
+    @MockBean
     OrganizationMapper organizationMapper;
     //@Captor == ArgumentCaptor.forClass(Sort.class);
     @Captor
@@ -37,7 +37,9 @@ class OrganizationServiceTest {
     void when_add_organization_with_unique_name_then_organization_should_be_added_to_repo() {
         //given
         OrganizationRequest organizationRequest = new OrganizationRequest("test");
+        //TODO najlepiej ręcznie utworzyć to czego oczkujemy, czyli bez mappera
         Organization organization = organizationMapper.mapOrganizationRequestToOrganization(organizationRequest);
+
         Mockito.when(organizationRepository.findByName("test")).thenReturn(Optional.empty());
 
         //when
@@ -170,14 +172,14 @@ class OrganizationServiceTest {
 
         //then
         Mockito.verify(organizationRepository).findAll();
-    }
+    }*/
 
     @TestConfiguration
     static class TestOrganizationServiceConfiguration {
 
         @Bean
-        public OrganizationService organizationService(OrganizationRepository organizationRepository) {
-            return new OrganizationService(organizationRepository);
+        public OrganizationService organizationService(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper) {
+            return new OrganizationService(organizationRepository, organizationMapper);
         }
-    }*/
+    }
 }
