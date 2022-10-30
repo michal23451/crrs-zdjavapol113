@@ -1,6 +1,7 @@
 //TODO
 package pl.sdaacademy.conferenceroomreservationsystem.organization;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -27,18 +28,18 @@ class OrganizationServiceTest {
     OrganizationRepository organizationRepository;
     @Autowired
     OrganizationService organizationService;
-    @MockBean
-    OrganizationMapper organizationMapper;
     //@Captor == ArgumentCaptor.forClass(Sort.class);
     @Captor
     ArgumentCaptor<Sort> sortArgumentCaptor;
+
+//   @Autowired
+//   OrganizationMapper organizationMapper; //potrzebny dla organizationService
 
     @Test
     void when_add_organization_with_unique_name_then_organization_should_be_added_to_repo() {
         //given
         OrganizationRequest organizationRequest = new OrganizationRequest("test");
-        //TODO najlepiej ręcznie utworzyć to czego oczkujemy, czyli bez mappera
-        Organization organization = organizationMapper.mapOrganizationRequestToOrganization(organizationRequest);
+        Organization organizationRequestMappedToOrganization = new Organization("test");
 
         Mockito.when(organizationRepository.findByName("test")).thenReturn(Optional.empty());
 
@@ -46,33 +47,34 @@ class OrganizationServiceTest {
         organizationService.add(organizationRequest);
 
         //then
-        Mockito.verify(organizationRepository).save(organization);
+        Mockito.verify(organizationRepository).save(organizationRequestMappedToOrganization);
     }
-/*
+
     @Test
     void when_add_organization_with_not_unique_name_then_exception_should_be_thrown() {
         //given
-        Organization organization = new Organization("test");
-        Mockito.when(organizationRepository.findByName("test")).thenReturn(Optional.of(organization));
+        OrganizationRequest organizationRequest = new OrganizationRequest("test");
+        Organization organizationRequestMappedToOrganization = new Organization("test");
+        Mockito.when(organizationRepository.findByName("test")).thenReturn(Optional.of(organizationRequestMappedToOrganization));
 
         //when
         //then
         assertThrows(IllegalArgumentException.class, () -> {
-            organizationService.add(organization);
+            organizationService.add(organizationRequest);
         });
     }
 
     @Test
     void when_delete_organization_with_existing_org_id_then_organization_should_be_removed_from_repo() {
         //given
-        Organization organization = new Organization(1L, "test");
-        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.of(organization));
+        Organization organizationToDelete = new Organization(1L, "test");
+        Mockito.when(organizationRepository.findById(1L)).thenReturn(Optional.of(organizationToDelete));
 
         //when
         organizationService.delete(1L);
 
         //then
-        Mockito.verify(organizationRepository).delete(organization);
+        Mockito.verify(organizationRepository).delete(organizationToDelete);
     }
 
     @Test
@@ -90,16 +92,16 @@ class OrganizationServiceTest {
     @Test
     void when_update_organization_witch_not_exist_in_repo_then_exception_should_be_thrown() {
         //given
-        Organization organization = new Organization(1L, "test");
-        Mockito.when(organizationRepository.findById(organization.getId())).thenReturn(Optional.empty());
+        OrganizationRequest organizationRequest = new OrganizationRequest(1L, "test");
+        Mockito.when(organizationRepository.findById(organizationRequest.getId())).thenReturn(Optional.empty());
 
         //when
         //then
         assertThrows(NoSuchElementException.class, () -> {
-            organizationService.update(organization);
+            organizationService.update(organizationRequest);
         });
     }
-
+/*
     @Test
     void when_update_organization_with_new_not_unique_org_name_then_exception_should_be_thrown() {
         //given
@@ -181,5 +183,11 @@ class OrganizationServiceTest {
         public OrganizationService organizationService(OrganizationRepository organizationRepository, OrganizationMapper organizationMapper) {
             return new OrganizationService(organizationRepository, organizationMapper);
         }
+
+        @Bean
+        public OrganizationMapper organizationMapper(){
+            return new OrganizationMapperImpl();
+        }
+
     }
 }
