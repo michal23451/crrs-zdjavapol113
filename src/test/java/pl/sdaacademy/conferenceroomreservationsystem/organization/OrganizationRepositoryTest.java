@@ -1,4 +1,3 @@
-//OK
 package pl.sdaacademy.conferenceroomreservationsystem.organization;
 
 import org.junit.jupiter.api.extension.ExtendWith;
