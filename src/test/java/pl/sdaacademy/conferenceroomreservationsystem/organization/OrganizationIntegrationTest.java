@@ -44,7 +44,7 @@ public class OrganizationIntegrationTest {
     }
 
     @Test
-    void when_update_organization_witchh_already_existing_name_then_bad_request_response_should_be_returned() throws Exception {
+    void when_update_organization_witch_already_existing_name_then_bad_request_response_should_be_returned() throws Exception {
         //given
         Organization organization = organizationRepository.save(new Organization("Amazon"));
         organizationRepository.save(new Organization("Meta"));

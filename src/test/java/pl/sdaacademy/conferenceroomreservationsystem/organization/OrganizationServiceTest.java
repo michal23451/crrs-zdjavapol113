@@ -1,4 +1,3 @@
-//TODO
 package pl.sdaacademy.conferenceroomreservationsystem.organization;
 
 import lombok.extern.slf4j.Slf4j;
@@ -101,19 +100,19 @@ class OrganizationServiceTest {
             organizationService.update(organizationRequest);
         });
     }
-/*
+
     @Test
     void when_update_organization_with_new_not_unique_org_name_then_exception_should_be_thrown() {
         //given
-        Organization existingOrg = new Organization(1L, "xxx");
-        Organization organization = new Organization(1L, "test");
-        Mockito.when(organizationRepository.findById(organization.getId())).thenReturn(Optional.of(existingOrg));
-        Mockito.when(organizationRepository.findByName(organization.getName())).thenReturn(Optional.of(organization));
+        Organization existingOrg = new Organization(1L, "test");
+        OrganizationRequest organizationRequest = new OrganizationRequest(1L, "test");
+        Mockito.when(organizationRepository.findById(organizationRequest.getId())).thenReturn(Optional.of(existingOrg));
+        Mockito.when(organizationRepository.findByName(organizationRequest.getName())).thenReturn(Optional.of(existingOrg));
 
         //when
         //then
         assertThrows(IllegalArgumentException.class, () -> {
-            organizationService.update(organization);
+            organizationService.update(organizationRequest);
         });
     }
 
@@ -122,12 +121,12 @@ class OrganizationServiceTest {
         //given
         ArgumentCaptor<Organization> organizationArgumentCaptor = ArgumentCaptor.forClass(Organization.class);
         Organization existingOrg = new Organization(1L, "xxx");
-        Organization organization = new Organization(1L, "test");
-        Mockito.when(organizationRepository.findById(organization.getId())).thenReturn(Optional.of(existingOrg));
-        Mockito.when(organizationRepository.findByName(organization.getName())).thenReturn(Optional.empty());
+        OrganizationRequest organizationRequest = new OrganizationRequest(1L, "test");
+        Mockito.when(organizationRepository.findById(organizationRequest.getId())).thenReturn(Optional.of(existingOrg));
+        Mockito.when(organizationRepository.findByName(organizationRequest.getName())).thenReturn(Optional.empty());
 
         //when
-        organizationService.update(organization);
+        organizationService.update(organizationRequest);
 
         //then
         Mockito.verify(organizationRepository).save(organizationArgumentCaptor.capture());
@@ -174,7 +173,7 @@ class OrganizationServiceTest {
 
         //then
         Mockito.verify(organizationRepository).findAll();
-    }*/
+    }
 
     @TestConfiguration
     static class TestOrganizationServiceConfiguration {
@@ -188,6 +187,5 @@ class OrganizationServiceTest {
         public OrganizationMapper organizationMapper(){
             return new OrganizationMapperImpl();
         }
-
     }
 }
