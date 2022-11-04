@@ -1,6 +1,5 @@
 package pl.sdaacademy.conferenceroomreservationsystem.organization;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -30,9 +29,6 @@ class OrganizationServiceTest {
     //@Captor == ArgumentCaptor.forClass(Sort.class);
     @Captor
     ArgumentCaptor<Sort> sortArgumentCaptor;
-
-//   @Autowired
-//   OrganizationMapper organizationMapper; //potrzebny dla organizationService
 
     @Test
     void when_add_organization_with_unique_name_then_organization_should_be_added_to_repo() {

@@ -3,27 +3,32 @@ package pl.sdaacademy.conferenceroomreservationsystem.conference_room;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import pl.sdaacademy.conferenceroomreservationsystem.organization.Organization;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import java.util.UUID;
+import javax.persistence.*;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConferenceRoom {
-    @Column(nullable = false, unique = true)
-    String name;
-    @Column(unique = true)
     @Id
-    @GeneratedValue
-    UUID id;
-    int floor;
-    boolean available;
-    int places;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name="UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    private String id;
+    private String name;
+    private String identifier;
+    @Column(nullable = false)
+    private Integer level;
+    @Column(nullable = false)
+    private Boolean availability;
+    private Integer numberOfSeats;
+    @ManyToOne
+    private Organization organization;
 
 
 }
