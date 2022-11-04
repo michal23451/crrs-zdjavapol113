@@ -30,5 +30,12 @@ public class ConferenceRoom {
     @ManyToOne
     private Organization organization;
 
-
+    public ConferenceRoom(String name, String identifier, Integer level, Boolean availability, Integer numberOfSeats, Organization organization) {
+        this.name = name;
+        this.identifier = identifier;
+        this.level = level;
+        this.availability = availability;
+        this.numberOfSeats = numberOfSeats;
+        this.organization = organization;
+    }
 }
